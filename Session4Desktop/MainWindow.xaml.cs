@@ -23,6 +23,8 @@ namespace Session4Desktop
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new Pages.InvertoryManagementPage());
+            Navigation.MainFrame = MainFrame;
         }
     }
 }
