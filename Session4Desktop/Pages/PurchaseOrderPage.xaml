@@ -33,7 +33,7 @@
                 <ComboBox x:Name="ComboHouses"
                           DisplayMemberPath="Name"
                           Width="200"
-                          SelectedItem="{Binding Warehouses}"/>
+                          SelectedItem="{Binding Warehouses1}"/>
             </StackPanel>
 
         </WrapPanel>
@@ -134,6 +134,7 @@
                             <DataTemplate>
                                 <Button x:Name="BtnRemove"
                                         Content="Remove"
+                                        Click="BtnRemove_Click"
                                         Style="{StaticResource RedButton}"
                                         Width="100"/>
                             </DataTemplate>

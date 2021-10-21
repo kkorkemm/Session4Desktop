@@ -24,14 +24,16 @@
                 <TextBlock Text="Source Warehouse: "/>
                 <ComboBox x:Name="ComboSourceHauses"
                           DisplayMemberPath="Name"
-                          Width="200"/>
+                          Width="200"
+                          SelectedItem="{Binding Warehouses}"/>
             </StackPanel>
 
             <StackPanel Margin="10">
                 <TextBlock Text="Destination Warehouse: "/>
                 <ComboBox x:Name="ComboDestHouses"
                           DisplayMemberPath="Name"
-                          Width="200"/>
+                          Width="200"
+                          SelectedItem="{Binding Warehouses1}"/>
             </StackPanel>
 
         </WrapPanel>
@@ -42,7 +44,8 @@
             <TextBlock Text="Date: "
                        VerticalAlignment="Center"/>
             <DatePicker x:Name="DateDate"
-                        Width="200"/>
+                        Width="200"
+                        SelectedDate="{Binding Date}"/>
         </StackPanel>
 
         <Grid Grid.Row="2"
@@ -113,7 +116,8 @@
                       x:Name="GridOrderItems"
                       IsReadOnly="True"
                       AutoGenerateColumns="False"
-                      Margin="10 0">
+                      Margin="10 0"
+                      ItemsSource="{Binding OrderItems}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Part Name"

@@ -69,7 +69,8 @@
                                     Style="{StaticResource BlueButton}"
                                     Content="View Batch Numbers"
                                     Width="150"
-                                    Click="BtnView_Click"/>
+                                    Click="BtnView_Click"
+                                    IsEnabled="{Binding BatchNumberHasRequired}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

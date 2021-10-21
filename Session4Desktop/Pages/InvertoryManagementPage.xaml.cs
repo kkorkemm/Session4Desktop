@@ -42,7 +42,7 @@ namespace Session4Desktop.Pages
         /// </summary>
         private void MenuWarehouse_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.MainFrame.Navigate(new WarehouseManagementPage());
+            Navigation.MainFrame.Navigate(new WarehouseManagementPage(null));
         }
 
         /// <summary>
@@ -53,17 +53,21 @@ namespace Session4Desktop.Pages
             Navigation.MainFrame.Navigate(new InvertoryReportPage());
         }
 
-        private void GridParts_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
-            
-        }
-
         /// <summary>
         /// Редактирование заказа
         /// </summary>
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.MainFrame.Navigate(new PurchaseOrderPage((sender as Button).DataContext as Orders));
+            var invertory = (sender as Button).DataContext as Orders;
+
+            if (invertory.TransactionTypeID == 1)
+            {
+                Navigation.MainFrame.Navigate(new PurchaseOrderPage(invertory));
+            }
+            else
+            {
+                Navigation.MainFrame.Navigate(new WarehouseManagementPage(invertory));
+            }
         }
 
         /// <summary>
