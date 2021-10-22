@@ -27,8 +27,36 @@ namespace Session4Desktop.Pages
             InitializeComponent();
 
             ComboWarehouse.ItemsSource = AppData.GetContext().Warehouses.ToList();
+            GridReport.ItemsSource = AppData.GetContext().OrderItems.ToList();
         }
 
+        /// <summary>
+        /// Обновление листа при фильтрации
+        /// </summary>
+        private void UpdateList()
+        {
+            var warehouse = ComboWarehouse.SelectedItem as Warehouses;
+            var list = AppData.GetContext().OrderItems.ToList();
+
+            if (RadioCurrent.IsChecked == true)
+            {
+                
+            }
+            if (RadioOut.IsChecked == true)
+            {
+
+            }
+            if (RadioReceived.IsChecked == true)
+            {
+                list = list.Where(p => p.Orders.DestinationWarehouseID == warehouse.ID).ToList();
+            }
+
+            GridReport.ItemsSource = list;
+        }
+
+        /// <summary>
+        /// View Batch Numbers
+        /// </summary>
         private void BtnView_Click(object sender, RoutedEventArgs e)
         {
 
@@ -40,6 +68,16 @@ namespace Session4Desktop.Pages
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             Navigation.MainFrame.GoBack();
+        }
+
+        private void ComboWarehouse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateList();
+        }
+
+        private void RadioCurrent_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateList();
         }
     }
 }

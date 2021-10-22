@@ -60,24 +60,40 @@ namespace Session4Desktop.Pages
 
             if (ComboParts.SelectedItem == null)
                 errors.AppendLine("Выберите деталь");
-            if (string.IsNullOrWhiteSpace(TextAmount.Text))
-                errors.AppendLine("Укажите сумму");
             else
             {
-                if (!double.TryParse(TextAmount.Text, out _))
-                    errors.AppendLine("Суммой может быть положительное число");
-                else if (Convert.ToDecimal(TextAmount.Text) < 0)
-                    errors.AppendLine("Суммой может быть положительное число");
-            }
-
-            if (ComboParts.SelectedItem != null)
-            {
-                if ((ComboParts.SelectedItem as Parts).BatchNumberHasRequired == true)
+                if (string.IsNullOrWhiteSpace(TextAmount.Text))
                 {
-                    if (string.IsNullOrWhiteSpace(TextBatch.Text))
-                        errors.AppendLine("Укажите номер партии");
+                    errors.AppendLine("Укажите сумму");
                 }
-            }
+                else
+                {
+                    if (!double.TryParse(TextAmount.Text, out _))
+                        errors.AppendLine("Суммой может быть положительное число");
+                    else if (Convert.ToDecimal(TextAmount.Text) < 0)
+                        errors.AppendLine("Суммой может быть положительное число");
+
+                    Parts selectedPart = ComboParts.SelectedItem as Parts;
+
+                    if (selectedPart.BatchNumberHasRequired == true)
+                    {
+                        if (string.IsNullOrWhiteSpace(TextBatch.Text))
+                            errors.AppendLine("Укажите номер партии");
+                        else
+                        {
+                            var part = ComboParts.SelectedItem as Parts;
+
+                            var number = AppData.GetContext().OrderItems.Where(p => p.BatchNumber == TextBatch.Text && p.PartID == part.ID).FirstOrDefault();
+
+                            if (number != null)
+                                errors.AppendLine("Номер партии должен быть уникальным");
+                        }
+                    }
+
+                    if (selectedPart.MinimumAmount != null && Convert.ToDecimal(TextAmount.Text) < selectedPart.MinimumAmount)
+                        errors.AppendLine($"Минимальная сумма для детали: {selectedPart.MinimumAmount}");
+                }               
+            } 
 
             if (errors.Length > 0)
             {
@@ -210,7 +226,7 @@ namespace Session4Desktop.Pages
         /// </summary>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.MainFrame.GoBack();
+            Navigation.MainFrame.Navigate(new InvertoryManagementPage());
         }
     }
 }

@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base\PartialPart.cs" />
     <Compile Include="Styles\DataGridConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -95,7 +96,6 @@
     <Compile Include="Base\Orders.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Base\PartialOrder.cs" />
     <Compile Include="Base\Parts.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

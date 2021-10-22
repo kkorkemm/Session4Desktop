@@ -19,7 +19,6 @@ namespace Session4Desktop.Base
         public long PartID { get; set; }
         public string BatchNumber { get; set; }
         public decimal Amount { get; set; }
-    
         public virtual Orders Orders { get; set; }
         public virtual Parts Parts { get; set; }
     }

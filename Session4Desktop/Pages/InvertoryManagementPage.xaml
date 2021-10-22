@@ -36,23 +36,23 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Part Name"
                                     Width="2*"
-                                    Binding="{Binding PartName}"/>
+                                    Binding="{Binding Parts.Name}"/>
                 <DataGridTextColumn Header="Transaction Type"
                                     Width="*"
-                                    Binding="{Binding TransactionTypes.Name}"/>
+                                    Binding="{Binding Orders.TransactionTypes.Name}"/>
                 <DataGridTextColumn Header="Date"
                                     Width="*"
-                                    Binding="{Binding Date, StringFormat=yyyy/MM/dd}"/>
+                                    Binding="{Binding Orders.Date, StringFormat=yyyy/MM/dd}"/>
                 <DataGridTextColumn Header="Amount"
                                     Width="*"
-                                    Binding="{Binding TheAmount}"
+                                    Binding="{Binding Amount}"
                                     />
                 <DataGridTextColumn Header="Source"
                                     Width="*"
-                                    Binding="{Binding Warehouses.Name}"/>
+                                    Binding="{Binding Orders.Warehouses.Name}"/>
                 <DataGridTextColumn Header="Destination"
                                     Width="*"
-                                    Binding="{Binding Warehouses1.Name}"/>
+                                    Binding="{Binding Orders.Warehouses1.Name}"/>
                 <DataGridTemplateColumn Header="Actions">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

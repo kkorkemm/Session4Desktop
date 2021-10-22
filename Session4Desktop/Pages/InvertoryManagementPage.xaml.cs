@@ -26,7 +26,7 @@ namespace Session4Desktop.Pages
         {
             InitializeComponent();
 
-            GridOrders.ItemsSource = AppData.GetContext().Orders.ToList().OrderBy(p => p.Date);
+            GridOrders.ItemsSource = AppData.GetContext().OrderItems.ToList().OrderBy(p => p.Orders.Date);
         }
 
         /// <summary>
@@ -58,15 +58,15 @@ namespace Session4Desktop.Pages
         /// </summary>
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            var invertory = (sender as Button).DataContext as Orders;
+            var invertory = (sender as Button).DataContext as OrderItems;
 
-            if (invertory.TransactionTypeID == 1)
+            if (invertory.Orders.TransactionTypeID == 1)
             {
-                Navigation.MainFrame.Navigate(new PurchaseOrderPage(invertory));
+                Navigation.MainFrame.Navigate(new PurchaseOrderPage(invertory.Orders));
             }
             else
             {
-                Navigation.MainFrame.Navigate(new WarehouseManagementPage(invertory));
+                Navigation.MainFrame.Navigate(new WarehouseManagementPage(invertory.Orders));
             }
         }
 
@@ -75,20 +75,28 @@ namespace Session4Desktop.Pages
         /// </summary>
         private void BtnRemove_Click(object sender, RoutedEventArgs e)
         {
-            Orders selectedOrder = (sender as Button).DataContext as Orders;
+            OrderItems selectedOrder = (sender as Button).DataContext as OrderItems;
 
             MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить запись?", "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
+                var order = selectedOrder.Orders;
+
+                if (order.OrderItems.Count < 2)
+                {
+                    MessageBox.Show("Удаление записи невозможно. Заказ состоит только из этой детали", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 try
                 {
-                    AppData.GetContext().Orders.Remove(selectedOrder);
+                    AppData.GetContext().OrderItems.Remove(selectedOrder);
                     AppData.GetContext().SaveChanges();
 
                     MessageBox.Show("Запись успешно удалена!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    GridOrders.ItemsSource = AppData.GetContext().Orders.ToList().OrderBy(p => p.Date);
+                    GridOrders.ItemsSource = AppData.GetContext().OrderItems.ToList().OrderBy(p => p.Orders.Date);
                 }
                 catch
                 {

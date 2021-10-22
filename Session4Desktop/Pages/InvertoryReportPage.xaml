@@ -25,7 +25,8 @@
                 <TextBlock Text="Warehouse: "/>
                 <ComboBox x:Name="ComboWarehouse"
                           DisplayMemberPath="Name"
-                          Width="200"/>
+                          Width="200"
+                          SelectionChanged="ComboWarehouse_SelectionChanged"/>
             </StackPanel>
 
             <StackPanel Margin="10">
@@ -33,13 +34,19 @@
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Content="Current Stock"
                                  x:Name="RadioCurrent"
-                                 Margin="5"/>
+                                 Margin="5"
+                                 Checked="RadioCurrent_Checked"
+                                 Unchecked="RadioCurrent_Checked"/>
                     <RadioButton Content="Received Stock"
                                  x:Name="RadioReceived"
-                                 Margin="5"/>
+                                 Margin="5"
+                                 Checked="RadioCurrent_Checked"
+                                 Unchecked="RadioCurrent_Checked"/>
                     <RadioButton Content="Out of Stock"
                                  x:Name="RadioOut"
-                                 Margin="5"/>
+                                 Margin="5"
+                                 Checked="RadioCurrent_Checked"
+                                 Unchecked="RadioCurrent_Checked"/>
                 </StackPanel>
             </StackPanel>
 
@@ -57,11 +64,14 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Part Name"
-                                    Width="*"/>
+                                    Width="*"
+                                    Binding="{Binding Parts.Name}"/>
                 <DataGridTextColumn Header="Current Stock"
-                                    Width="*"/>
+                                    Width="*"
+                                    Binding="{Binding Parts.CurrentStock}"/>
                 <DataGridTextColumn Header="Received Stock"
-                                    Width="*"/>
+                                    Width="*"
+                                    Binding="{Binding Parts.ReceivedStock}"/>
                 <DataGridTemplateColumn Header="Action">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -70,12 +80,12 @@
                                     Content="View Batch Numbers"
                                     Width="150"
                                     Click="BtnView_Click"
-                                    IsEnabled="{Binding BatchNumberHasRequired}"/>
+                                    IsEnabled="{Binding Parts.BatchNumberHasRequired}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-            
+             
         </DataGrid>
 
         <Button x:Name="BtnBack"
