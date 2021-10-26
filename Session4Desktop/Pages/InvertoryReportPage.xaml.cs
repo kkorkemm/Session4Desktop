@@ -27,7 +27,8 @@ namespace Session4Desktop.Pages
             InitializeComponent();
 
             ComboWarehouse.ItemsSource = AppData.GetContext().Warehouses.ToList();
-            GridReport.ItemsSource = AppData.GetContext().OrderItems.ToList();
+
+            TextResult.Text = "Выберите склад для получения списка";
         }
 
         /// <summary>
@@ -36,22 +37,51 @@ namespace Session4Desktop.Pages
         private void UpdateList()
         {
             var warehouse = ComboWarehouse.SelectedItem as Warehouses;
-            var list = AppData.GetContext().OrderItems.ToList();
+
+            if (warehouse == null)
+            {
+                MessageBox.Show("Выберите отдел", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var orderItems = AppData.GetContext().OrderItems;
+            var parts = AppData.GetContext().Parts.Select(x => new
+            {
+                x.Name,
+
+                CurrentStock = orderItems.Where(p => p.PartID == x.ID && p.Orders.DestinationWarehouseID == warehouse.ID).Sum(p => (Decimal?)p.Amount) - orderItems.Where(p => p.PartID == x.ID && p.Orders.SourceWarehouseID == warehouse.ID).Sum(p => (Decimal?)p.Amount),
+
+                ReceivedStock = orderItems.Where(p => p.PartID == x.ID && p.Orders.DestinationWarehouseID == warehouse.ID).Sum(p => (Decimal?)p.Amount)
+            }).ToArray();
 
             if (RadioCurrent.IsChecked == true)
             {
-                
+                parts = parts.Where(p => p.CurrentStock > 0).ToArray();
             }
             if (RadioOut.IsChecked == true)
             {
-
+                parts = parts.Where(p => p.CurrentStock < 1).ToArray();
             }
             if (RadioReceived.IsChecked == true)
             {
-                list = list.Where(p => p.Orders.DestinationWarehouseID == warehouse.ID).ToList();
+                parts = parts.Where(p => p.ReceivedStock > 0).ToArray();
             }
 
-            GridReport.ItemsSource = list;
+            List<Parts> partList = new List<Parts>();
+
+            foreach(var item in parts)
+            {
+                Parts part = new Parts()
+                {
+                    Name = item.Name,
+                    CurrentStock = item.CurrentStock,
+                    ReceivedStock = item.ReceivedStock
+                };
+                partList.Add(part);
+            }
+
+            GridReport.ItemsSource = partList;
+            TextResult.Text = "Result: ";
         }
 
         /// <summary>
@@ -59,7 +89,7 @@ namespace Session4Desktop.Pages
         /// </summary>
         private void BtnView_Click(object sender, RoutedEventArgs e)
         {
-
+            /// что здесь делать
         }
 
         /// <summary>
@@ -67,9 +97,12 @@ namespace Session4Desktop.Pages
         /// </summary>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.MainFrame.GoBack();
+            Navigation.MainFrame.Navigate(new InvertoryManagementPage());
         }
 
+        /// <summary>
+        /// Фильтрация
+        /// </summary>
         private void ComboWarehouse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateList();

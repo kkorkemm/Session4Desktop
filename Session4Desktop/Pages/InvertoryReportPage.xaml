@@ -54,7 +54,8 @@
 
         <TextBlock Text="Result: "
                    Grid.Row="1"
-                   Margin="10 0"/>
+                   Margin="10 0"
+                   x:Name="TextResult"/>
 
         <DataGrid Grid.Row="2"
                   x:Name="GridReport"
@@ -65,13 +66,13 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Part Name"
                                     Width="*"
-                                    Binding="{Binding Parts.Name}"/>
+                                    Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Current Stock"
                                     Width="*"
-                                    Binding="{Binding Parts.CurrentStock}"/>
+                                    Binding="{Binding CurrentStock}"/>
                 <DataGridTextColumn Header="Received Stock"
                                     Width="*"
-                                    Binding="{Binding Parts.ReceivedStock}"/>
+                                    Binding="{Binding ReceivedStock}"/>
                 <DataGridTemplateColumn Header="Action">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -80,7 +81,7 @@
                                     Content="View Batch Numbers"
                                     Width="150"
                                     Click="BtnView_Click"
-                                    IsEnabled="{Binding Parts.BatchNumberHasRequired}"/>
+                                    IsEnabled="{Binding BatchNumberIsEnabled}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

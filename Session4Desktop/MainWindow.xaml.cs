@@ -25,6 +25,9 @@ namespace Session4Desktop
             InitializeComponent();
             MainFrame.Navigate(new Pages.InvertoryManagementPage());
             Navigation.MainFrame = MainFrame;
+
+            // сконвентировано
+            //IcoConverter.ConvertIco();
         }
     }
 }

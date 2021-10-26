@@ -5,7 +5,7 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
-        <!--<Setter Property="FontFamily" Value="Helvetica"/>-->
+        <Setter Property="FontFamily" Value="Helvetica"/>
     </Style>
 
     <Style TargetType="TextBlock" x:Key="TextTitle">

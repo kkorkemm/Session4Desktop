@@ -13,7 +13,7 @@ namespace Session4Desktop.Styles
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (long)value == 1 ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.White);
+            return (long)value == 1 ? new SolidColorBrush(Colors.ForestGreen) : new SolidColorBrush(Colors.White);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

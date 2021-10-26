@@ -8,6 +8,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Invertory Management">
 
+    <Page.Resources>
+        <Style TargetType="{x:Type DataGridCell}" x:Key="AmountCell">
+            <Setter Property="Background" Value="{Binding Orders.TransactionTypeID, Converter={StaticResource DataGridConverter}}"/>
+        </Style>
+    </Page.Resources>
+    
     <Grid>
 
         <Grid.RowDefinitions>
@@ -46,7 +52,7 @@
                 <DataGridTextColumn Header="Amount"
                                     Width="*"
                                     Binding="{Binding Amount}"
-                                    />
+                                    CellStyle="{StaticResource AmountCell}"/>
                 <DataGridTextColumn Header="Source"
                                     Width="*"
                                     Binding="{Binding Orders.Warehouses.Name}"/>
